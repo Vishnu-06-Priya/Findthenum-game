@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guess the Number Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+    <h1>Guess the Number Game</h1>
+    <p>I'm thinking of a number between 1 and 10. Can you guess what it is?</p>
+    <input type="number" id="guessInput">
+    <button onclick="checkGuess()">Guess</button>
+    <p id="message"></p>
+
+    <script>
+        // Generate a random number between 1 and 10
+        const randomNumber = Math.floor(Math.random() * 10) + 1;
+        let attempts = 3;
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guessInput').value);
+            const messageElement = document.getElementById('message');
+
+            if (isNaN(guess) || guess < 1 || guess > 10) {
+                messageElement.textContent = "Please enter a valid number between 1 and 10.";
+            } else {
+                if (guess === randomNumber) {
+                    messageElement.textContent = "Congratulations! You guessed the correct number.";
+                    disableInputAndButton();
+                } else {
+                    attempts--;
+                    if (attempts === 0) {
+                        messageElement.textContent = "Game over! The correct number was " + randomNumber + ".";
+                        disableInputAndButton();
+                    } else {
+                        messageElement.textContent = "Incorrect guess. You have " + attempts + " attempts left.";
+                    }
+                }
+            }
+        }
+
+        function disableInputAndButton() {
+            document.getElementById('guessInput').disabled = true;
+            document.querySelector('button').disabled = true;
+        }
+    </script>
+</body>
+</html>
